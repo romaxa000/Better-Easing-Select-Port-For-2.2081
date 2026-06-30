@@ -1,6 +1,12 @@
 #include "Utils.hpp"
 
+#include <cmath>
+#include <functional>
+#include <string>
+#include <unordered_map>
+
 using namespace geode::prelude;
+
 
 const float pi = 3.14159;
 const float cc1 = 1.70158;
@@ -41,14 +47,14 @@ const std::unordered_map<int, std::function<float(float, float)>> easingFunction
         return powf(2, -exponent * x) * sinf(((x * exponent) - 0.75f) * cc4) + 1;
     }},
     {7, [] (float x, float exponent) { // bounce
-        if(x < 0.5f) return 8 * powf(2, 8 * (x - 1)) * abs(sinf((x * pi) * 7));
-        else return 1 - (8 * powf( 2, -8 * x) * abs(sinf((x * pi) * 7)));
+        if (x < 0.5f) return 8 * powf(2, 8 * (x - 1)) * std::abs(sinf((x * pi) * 7));
+        else return 1 - (8 * powf(2, -8 * x) * std::abs(sinf((x * pi) * 7)));
     }},
     {8, [] (float x, float exponent) {
-        return powf(2, 6 * (x - 1)) * abs(sinf((x * pi) * 3.5f));
+        return powf(2, 6 * (x - 1)) * std::abs(sinf((x * pi) * 3.5f));
     }},
     {9, [] (float x, float exponent) {
-        return 1 - (powf(2, -6 * x) * abs(cosf((x * pi) * 3.5f)));
+        return 1 - (powf(2, -6 * x) * std::abs(cosf((x * pi) * 3.5f)));
     }},
     {10, [] (float x, float exponent) { // exponential
         if (x == 0 || x == 1) return x;
