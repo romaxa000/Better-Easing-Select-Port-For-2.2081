@@ -1,46 +1,25 @@
-name: Build Geode Mod
+name: Build iOS
 
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - runner: windows-latest
-            target: Win64
-            name: win
-
-          - runner: ubuntu-latest
-            target: Android64
-            name: android64
-
-          - runner: ubuntu-latest
-            target: Android32
-            name: android32
-
-          - runner: macos-latest
-            target: MacOS
-            name: mac
-
-    runs-on: ${{ matrix.runner }}
+  build-ios:
+    runs-on: macos-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Build Mod
+      - name: Build Mod for iOS
         id: build
         uses: geode-sdk/build-geode-mod@main
         with:
-          target: ${{ matrix.target }}
-          combine: true
+          target: iOS
 
-      - name: Upload Artifact
+      - name: Upload iOS Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.name }}
+          name: ios
           path: ${{ steps.build.outputs.build-output }}
